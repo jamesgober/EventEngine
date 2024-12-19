@@ -1,0 +1,41 @@
+{
+    "name": "eventengine",
+    "version": "1.0.0",
+    "description": "EventEngine: A lightweight, extensible JavaScript library for managing DOM events with features like namespacing, throttling, debouncing, observables, debugging tools, and a focus on performance and flexibility.",
+    "main": "dist/eventengine.min.js",
+    "scripts": {
+        "test": "jest",
+        "build": "rollup -c",
+        "lint": "eslint .",
+        "prepublishOnly": "npm run lint && npm run test && npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jamesgober/EventEngine.git"
+    },
+    "keywords": [
+        "javascript",
+        "javascript-library",
+        "dom-events",
+        "events",
+        "lightweight",
+        "debugging",
+        "namespacing",
+        "observables",
+        "event-handling",
+        "custom-events",
+        "performance"
+    ],
+    "author": "James Gober <me@jamesgober.com> (https://jamesgober.com)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/jamesgober/EventEngine/issues"
+    },
+    "homepage": "https://github.com/jamesgober/EventEngine#readme",
+    "devDependencies": {
+        "@rollup/plugin-terser": "^0.4.4",
+        "eslint": "^8.0.0",
+        "jest": "^29.0.0",
+        "rollup": "^3.20.0"
+    }
+}
