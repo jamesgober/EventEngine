@@ -1,0 +1,29 @@
+# Set default behavior to automatically normalize line endings
+* text=auto
+
+# Ensure JavaScript files have consistent line endings
+*.js text eol=lf
+
+# Ensure JSON files have consistent line endings
+*.json text eol=lf
+
+# Ensure CSS files have consistent line endings
+*.css text eol=lf
+
+# Ensure Markdown files have consistent line endings
+*.md text eol=lf
+
+# Exclude certain files from being included in export archives
+node_modules/* export-ignore
+dev/* export-ignore
+dist/* export-ignore
+logs/* export-ignore
+.DS_Store export-ignore
+Thumbs.db export-ignore
+desktop.ini export-ignore
+
+# Specific binary files
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
