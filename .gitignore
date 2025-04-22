@@ -59,6 +59,8 @@ yarn.lock
 *.env.test.local
 *.env.production.local
 src/copyright.js
+jest.config.js
+jest.setup.js
 
 # Developer-specific folder
 dev/

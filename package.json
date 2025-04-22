@@ -2,7 +2,7 @@
     "name": "eventengine",
     "version": "1.0.0",
     "description": "EventEngine: A lightweight, extensible JavaScript library for managing DOM events with features like namespacing, throttling, debouncing, observables, debugging tools, and a focus on performance and flexibility.",
-    "main": "dist/eventengine.min.js",
+    "main": "dist/events.min.js",
     "scripts": {
         "test": "jest",
         "build": "rollup -c",
@@ -35,7 +35,18 @@
     "devDependencies": {
         "@rollup/plugin-terser": "^0.4.4",
         "eslint": "^8.0.0",
-        "jest": "^29.0.0",
+        "jest": "^29.7.0",
+        "jest-environment-jsdom": "^29.7.0",
+        "jsdom": "^25.0.1",
         "rollup": "^3.20.0"
+    },
+    "jest": {
+        "testEnvironment": "jest-environment-jsdom",
+        "setupFilesAfterEnv": [
+            "<rootDir>/jest.setup.js"
+        ]
+    },
+    "dependencies": {
+        "util": "^0.12.5"
     }
 }

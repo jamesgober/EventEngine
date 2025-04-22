@@ -1,4 +1,5 @@
-/*                    _                          _                          
+/*
+                      _                          _                          
                      | |                        (_)                         
   _____   _____ _ __ | |_    ___ _ __   __ _ _ _ __   ___ 
  / _ \ \ / / _ \ '_ \| __/  / _ \ '_ \ / _` | | '_ \ / _ \
@@ -7,6 +8,7 @@
                                         __/ |  JS LIBRARY
                                        |___/ 
 */
+
  /*!
  * Event Engine - A High-Performance JavaScript DOM Events Library
  * 
@@ -24,6 +26,16 @@
  * 
  * Roles: Developer, Architect, Maintainer, Designer, Project Lead, Author 
  */
+
+
+
+const isNode = typeof window === 'undefined';
+const context = isNode ? {} : window; // Fallback to an empty object in Node.js
+
+// Mock addEventListener in Node.js environment
+if (isNode) {
+  context.addEventListener = () => {}; // No-op
+}
 
 /**
  * Events Module
@@ -49,10 +61,18 @@
         global.Events = factory(global);
     }
 
-}(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this, function (window) {
+}(typeof window !== 'undefined' ? window : global, function (window) {
     'use strict';
 
-    const { throttle, debounce, doEvent } = EventUtils; // Import utility methods
+    // import { throttle, debounce, doEvent } from './EventUtils';
+    const EventUtils = require('./EventUtils'); // Adjust the path as needed
+
+    // Destructure the utilities
+    const { throttle, debounce, doEvent } = EventUtils; 
+
+    if (isNode) {
+        console.warn('Events library is running in a Node.js environment. DOM operations are disabled.');
+    }
 
     /**
      * Container for all event handling functionalities.
@@ -64,6 +84,7 @@
      * @private
      */
     const liveEvents = new Map();
+
     /**
      * Stores debugging and analytics data.
      * @private
@@ -83,6 +104,12 @@
      * @private
      */
     const groups = new Map();
+
+    // Refactor selector validation
+    const isValidSelector = selector =>
+        selector instanceof HTMLElement || 
+        selector === window || 
+        selector === document;
 
     /**
      * Enables debugging mode for event tracking.
@@ -147,56 +174,47 @@
      * @param {boolean} [once=false] - If true, the listener is removed after the first execution.
      * @param {string} [group=''] - Optional group to organize listeners.
      */
-    Events.add = function (types, selector, callback, options = {}, namespace = '', once = false, group = '') {
+    Events.add = function (types, target, callback, options = {}, namespace = '', once = false, group = '') {
+        if (!(target instanceof context.HTMLElement || target === context || target === context.document)) {
+            throw new Error('Invalid target. Must be an instance of HTMLElement, Window, or Document.');
+        }
+
         types.split(',').forEach(type => {
             type = type.trim();
-            let handler = callback;
 
-            if (options.throttle) handler = throttle(callback, options.throttle);
-            if (options.debounce) handler = debounce(callback, options.debounce);
-
-            const listener = {
-                selector,
-                callback: handler,
-                originalCallback: callback,
-                namespace,
-                options,
-                once,
-                priority: options.priority || 0,
-            };
+            const handler = options.throttle
+                ? throttle(callback, options.throttle)
+                : options.debounce
+                ? debounce(callback, options.debounce)
+                : callback;
 
             if (!liveEvents.has(type)) liveEvents.set(type, []);
-            liveEvents.get(type).push(listener);
+            liveEvents.get(type).push({ target, callback: handler });
+
+            target.addEventListener(type, handler, { capture: options.capture || false });
 
             if (group) {
                 if (!groups.has(group)) groups.set(group, []);
-                groups.get(group).push({ type, listener });
+                groups.get(group).push({ type, target, handler });
             }
-
-            window.addEventListener(type, function eventHandlerWrapper(event) {
-                handler.call(selector, event);
-                if (once) {
-                    Events.remove(type, selector, callback, namespace);
-                    window.removeEventListener(type, eventHandlerWrapper, options.capture || false);
-                }
-            }, { capture: options.capture || false, passive: options.passive || false });
         });
     };
 
     /**
      * Removes an event listener or all listeners for a type/namespace.
      */
-    Events.remove = function (types, selector, callback, namespace = '') {
+    /**
+     * Removes an event listener.
+     */
+    Events.remove = function (types, target, callback) {
         types.split(',').forEach(type => {
-            const listeners = liveEvents.get(type) || [];
-            const updatedListeners = listeners.filter(listener =>
-                !(listener.selector === selector && listener.originalCallback === callback && (!namespace || listener.namespace === namespace))
-            );
+            target.removeEventListener(type.trim(), callback);
 
-            if (updatedListeners.length) liveEvents.set(type, updatedListeners);
-            else {
-                liveEvents.delete(type);
-                window.removeEventListener(type, eventHandler, true);
+            if (liveEvents.has(type)) {
+                liveEvents.set(
+                    type,
+                    liveEvents.get(type).filter(e => e.target !== target || e.callback !== callback)
+                );
             }
         });
     };
