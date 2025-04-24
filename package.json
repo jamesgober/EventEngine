@@ -1,6 +1,6 @@
 {
     "name": "@jamesgober/eventflow",
-    "version": "1.0.0",
+    "version": "1.0.0-rc1",
     "description": "EventFlow: A powerful JavaScript event system with namespacing, throttling, debouncing, and observables — designed for performance-driven interfaces.",
     "main": "dist/eventflow.min.js",
     "type": "commonjs",
