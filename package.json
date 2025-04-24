@@ -1,52 +1,59 @@
 {
-    "name": "eventengine",
+    "name": "@jamesgober/eventflow",
     "version": "1.0.0",
-    "description": "EventEngine: A lightweight, extensible JavaScript library for managing DOM events with features like namespacing, throttling, debouncing, observables, debugging tools, and a focus on performance and flexibility.",
-    "main": "dist/events.min.js",
+    "description": "EventFlow: A powerful JavaScript event system with namespacing, throttling, debouncing, and observables — designed for performance-driven interfaces.",
+    "main": "dist/eventflow.min.js",
+    "type": "commonjs",
     "scripts": {
         "test": "jest",
+        "coverage": "jest --coverage",
         "build": "rollup -c",
         "lint": "eslint .",
-        "prepublishOnly": "npm run lint && npm run test && npm run build"
+        "prepublishOnly": "npm run lint && npm run test && npm run build",
+        "dev": "rollup -c -w",
+        "check": "npm run lint && npm run test && npm run coverage",
+        "docs:html": "jsdoc -c jsdoc.config.json",
+        "docs": "npm run docs:html",
+        "docs:preview": "open ./docs/api/index.html"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/jamesgober/EventEngine.git"
+        "url": "https://github.com/jamesgober/event-flow.git"
     },
     "keywords": [
+        "eventflow",
+        "event-system",
+        "event-emitter",
         "javascript",
-        "javascript-library",
-        "dom-events",
         "events",
-        "lightweight",
-        "debugging",
-        "namespacing",
-        "observables",
-        "event-handling",
         "custom-events",
-        "performance"
+        "observables",
+        "namespacing",
+        "throttle",
+        "debounce",
+        "high-performance",
+        "dom-events",
+        "frontend-library"
     ],
-    "author": "James Gober <me@jamesgober.com> (https://jamesgober.com)",
+    "author": "James Gober <contact@jamesgober.com> (https://jamesgober.com)",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/jamesgober/EventEngine/issues"
+        "url": "https://github.com/jamesgober/event-flow/issues"
     },
-    "homepage": "https://github.com/jamesgober/EventEngine#readme",
+    "homepage": "https://github.com/jamesgober/event-flow#readme",
     "devDependencies": {
+        "@eslint/js": "^9.25.1",
         "@rollup/plugin-terser": "^0.4.4",
-        "eslint": "^8.0.0",
+        "eslint": "^8.57.1",
+        "globals": "^16.0.0",
         "jest": "^29.7.0",
         "jest-environment-jsdom": "^29.7.0",
+        "jsdoc": "^4.0.4",
+        "jsdoc-to-markdown": "^9.1.1",
         "jsdom": "^25.0.1",
         "rollup": "^3.20.0"
     },
-    "jest": {
-        "testEnvironment": "jest-environment-jsdom",
-        "setupFilesAfterEnv": [
-            "<rootDir>/jest.setup.js"
-        ]
-    },
     "dependencies": {
-        "util": "^0.12.5"
+        "benchmark": "^2.1.4"
     }
 }

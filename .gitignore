@@ -1,8 +1,8 @@
-# Node Modules
+# Common
+dist/
+.nyc_output/
 node_modules/
 
-# Build and distribution folders
-dist/
 
 # Logs
 logs/
@@ -62,5 +62,11 @@ src/copyright.js
 jest.config.js
 jest.setup.js
 
+
 # Developer-specific folder
 dev/
+
+# Optional
+docs/template/
+docs/api-md/
+docs/api/

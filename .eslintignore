@@ -1,0 +1,12 @@
+docs/api/\ndev/old/
+# Ignore generated HTML docs (useless for lint)
+docs/api/
+
+# Ignore old dev/test trash
+dev/old/
+
+# Optional: Ignore API markdown too
+docs/api-md/
+
+# Optional: Ignore tests if you don't want lint errors from jest globals
+tests/
