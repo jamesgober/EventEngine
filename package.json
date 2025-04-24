@@ -3,11 +3,11 @@
     "version": "1.0.0-rc1",
     "description": "EventFlow: A powerful JavaScript event system with namespacing, throttling, debouncing, and observables — designed for performance-driven interfaces.",
     "main": "dist/eventflow.min.js",
-    "type": "commonjs",
+    "type": "module",
     "scripts": {
         "test": "jest",
         "coverage": "jest --coverage",
-        "build": "rollup -c",
+        "build": "rollup -c rollup.config.mjs",
         "lint": "eslint .",
         "prepublishOnly": "npm run lint && npm run test && npm run build",
         "dev": "rollup -c -w",
@@ -43,6 +43,8 @@
     "homepage": "https://github.com/jamesgober/event-flow#readme",
     "devDependencies": {
         "@eslint/js": "^9.25.1",
+        "@rollup/plugin-commonjs": "^28.0.3",
+        "@rollup/plugin-node-resolve": "^16.0.1",
         "@rollup/plugin-terser": "^0.4.4",
         "eslint": "^8.57.1",
         "globals": "^16.0.0",
@@ -52,8 +54,5 @@
         "jsdoc-to-markdown": "^9.1.1",
         "jsdom": "^25.0.1",
         "rollup": "^3.20.0"
-    },
-    "dependencies": {
-        "benchmark": "^2.1.4"
     }
 }

@@ -25,9 +25,6 @@
             <img src="https://img.shields.io/npm/dm/@jamesgober/eventflow.svg" alt="NPM Downloads">
         </a>
         <span>&nbsp;</span>
-        <!-- Bundle size -->
-        <img src="https://img.shields.io/codecov/c/github/jamesgober/event-flow" alt="CommonJS Badge">
-        <span>&nbsp;</span>
         <!-- BCommonJS Badge -->
         <img src="https://img.shields.io/badge/module-CJS-informational" alt="CommonJS Badge">
         <span>&nbsp;</span>
